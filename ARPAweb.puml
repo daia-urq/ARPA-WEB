@@ -1,0 +1,247 @@
+@startuml
+abstract class com.royalideas.ARPAweb.animales.Animal{
+    Integer animalid
+    String raza
+    Integer edad
+    String nombre
+    String genero
+    Boolean castrado
+    Adoptante adoptante
+    HistoriaClinica historiaClinica
+    Condicion condicion
+    Compatible compatibilidad
+    Protectora protectora
+    TipoAnimal tipo
+    {method} getAnimalid
+    {method} getRaza
+    {method} getEdad
+    {method} getNombre
+    {method} isCastrado
+    {method} getAdoptante
+    {method} getHistoriaClinica
+    {method} getConcidicon
+    {method} getCompatibilidad
+    {method} getProtectora
+    {method} getTipo
+    {method} setAnimalid
+    {method} setRaza
+    {method} setEdad
+    {method} setNombre
+    {method} setCastrado
+    {method} setAdoptante
+    {method} setHistoriaClinica
+    {method} setConcidicon
+    {method} setCompatibilidad
+    {method} setProtectora
+    {method} setTipo
+}
+abstract class com.royalideas.ARPAweb.personas.Persona{
+    Integer personaid
+    String nombre
+    Integer dni
+    BigInteger telefono
+    String mail
+    String domicilio
+    String contrasenia
+    String usuario
+    Date fechaNacimiento
+    TipoPersona tipo
+    {method} getPersonaid
+    {method} getDni
+    {method} getMail
+    {method} getDomicilio
+    {method} getContrasenia
+    {method} getUsuario
+    {method} getFechaNacimiento
+    {method} getTipo
+    {method} setPersonaid
+    {method} setDni
+    {method} setMail
+    {method} setDomicilio
+    {method} setContrasenia
+    {method} setUsuario
+    {method} setFechaNacimiento
+    {method} setTipo
+}
+class com.royalideas.ARPAweb.animales.Gato{
+    boolean aptoDepto
+    {method} setAptoDepto
+    {method} isAptoDepto
+}
+class com.royalideas.ARPAweb.animales.Perro{
+    String tamanioo
+    {method} getTamanio
+    {method} setTamanio
+}
+class com.royalideas.ARPAweb.personas.Colaborador{
+    List<Protectora> protectora
+    String horario
+    {method} getProtectora
+    {method} getHorario
+    {method} setProtectora
+    {method} setHorario
+}
+class com.royalideas.ARPAweb.personas.Adoptante{
+    Boolean apto
+    {method} isApto
+    {method} setApto
+}
+class com.royalideas.ARPAweb.personas.Encargado{
+    Integer genteAcargo
+    Protectora protectora
+    {method} getGenteAcargo
+    {method} getProtectora
+    {method} setGenteAcargo
+    {method} setProtectora
+}
+class com.royalideas.ARPAweb.personas.Transito{
+    Capacidad capacidad
+    boolean disponible 
+    {method} getCapacidad
+    {method} getDisponible
+    {method} setCapacidad
+    {method} setDisponible
+}
+class com.royalideas.ARPAweb.protectora.Alergias{
+    Integer alergiasid
+    Nivel nivel
+    String sustancia
+    HistoriaClinica historiaClinicaid
+    {method} getAlergiasid
+    {method} getNivel
+    {method} getSustancia
+    {method} getHistoriaClinicaid
+    {method} setAlergiasid
+    {method} setNivel
+    {method} setSustancia
+    {method} setHistoriaClinicaid
+}
+class com.royalideas.ARPAweb.protectora.Capacidad{
+    Integer capacidadid
+    Integer capTotal
+    Boolean ocupado
+    {method} getCapacidadid
+    {method} getCapTotal
+    {method} isOcupado
+    {method} setCapacidaid
+    {method} setCapTotal
+    {method} setOcupado
+}
+class com.royalideas.ARPAweb.protectora.HistoriaClinica{
+    Integer historiaClinicaid
+    List<Medicamentos> medicamentosid
+    boolean enfermedadCronica
+    boolean movilidadCompleta
+    List<Alergias> alergiasid
+    {method} getHistoriaClinicaid
+    {method} getMedicamentodid
+    {method} isEnfermedadCronica
+    {method} isMovilidadCompleta
+    {method} get alergiasid
+    {method} setHistoriaClinicaid
+    {method} setMedicamentodid
+    {method} setEnfermedadCronica
+    {method} setMovilidadCompleta
+    {method} set alergiasid
+}
+class com.royalideas.ARPAweb.protectora.Insumo{
+    Integer insumoid
+    String descripcion
+    Integer cantidad
+    Protectora protectora
+    {method} getInsumoid
+    {method} getDescripcion
+    {method} getCantidad
+    {method} getProtectora
+    {method} setInsumoid
+    {method} setDescripcion
+    {method} setCantidad
+    {method} setProtectora
+}
+class com.royalideas.ARPAweb.protectora.Medicamentos{
+    Integer medicamentosid
+    String nombre
+    Double dosis
+    Unidad unidad
+    HistoriaClinica historiaClinicaid
+    {method} getMedicamentosid
+    {method} getNombre
+    {method} getDosis
+    {method} getUnidad
+    {method} getHistoriaClinicaid
+    {method} setMedicamentosid
+    {method} setNombre
+    {method} setDosis
+    {method} setUnidad
+    {method} setHistoriaClinicaid
+}
+class com.royalideas.ARPAweb.protectora.Protectora{
+    Integer protectoraid
+    String nombre
+    String domicilio
+    Integer telefono
+    String mail
+    Encargado encargada
+    List<Empleado> empleados
+    List<Animal> animales
+    List<Insumo> insumos
+    Capacidad capacidad
+    String horario
+    {method} getProtectoraid
+    {method} getNombre
+    {method} getDomicilio
+    {method} getTelefono
+    {method} getMail
+    {method} getEncargada
+    {method} getEmpleados
+    {method} getAnimales
+    {method} getInsumos
+    {method} getCapacidad
+    {method} getHorario
+    {method} setProtectoraid
+    {method} setNombre
+    {method} setDomicilio
+    {method} setTelefono
+    {method} setMail
+    {method} setEncargada
+    {method} setEmpleados
+    {method} setAnimales
+    {method} setInsumos
+    {method} setCapacidad
+    {method} setHorario
+}
+class com.royalideas.ARPAweb.animales.TipoAnimal{
+    Integer tipoAnimalid
+    Tipo descripcion
+    {method} getTipoAnimalid
+    {method} getDescripcion
+    {method} setTipoAnimalid
+    {method} setDescripcion
+}
+class com.royalideas.ARPAweb.personas.TipoPersona{
+    Integer tipoPersonaid
+    String descripcion
+    {method} getTipoPersonaid
+    {method} getDescripcion
+    {method} setDescripcion
+    {method} setTipoPersonaid
+}
+com.royalideas.ARPAweb.protectora.Protectora -- com.royalideas.ARPAweb.personas.Colaborador : n:n
+com.royalideas.ARPAweb.personas.Persona --|> com.royalideas.ARPAweb.personas.Encargado
+com.royalideas.ARPAweb.personas.Persona --|> com.royalideas.ARPAweb.personas.Adoptante
+com.royalideas.ARPAweb.personas.Persona --|> com.royalideas.ARPAweb.personas.Colaborador
+com.royalideas.ARPAweb.personas.Persona --|> com.royalideas.ARPAweb.personas.Transito
+com.royalideas.ARPAweb.animales.Animal --|> com.royalideas.ARPAweb.animales.Gato
+com.royalideas.ARPAweb.animales.Animal --|> com.royalideas.ARPAweb.animales.Perro 
+com.royalideas.ARPAweb.animales.Animal -- com.royalideas.ARPAweb.protectora.HistoriaClinica : 1:1
+com.royalideas.ARPAweb.protectora.Protectora --* com.royalideas.ARPAweb.protectora.Insumo : 1:n
+com.royalideas.ARPAweb.protectora.Protectora --* com.royalideas.ARPAweb.protectora.Capacidad : 1:1
+com.royalideas.ARPAweb.protectora.Protectora -- com.royalideas.ARPAweb.animales.Animal : 1:1
+com.royalideas.ARPAweb.protectora.HistoriaClinica --* com.royalideas.ARPAweb.protectora.Medicamentos : n:n
+com.royalideas.ARPAweb.protectora.HistoriaClinica --* com.royalideas.ARPAweb.protectora.Alergias : 1:n
+com.royalideas.ARPAweb.protectora.Protectora -- com.royalideas.ARPAweb.personas.Encargado : 1:1
+com.royalideas.ARPAweb.animales.Animal -- com.royalideas.ARPAweb.personas.Adoptante  : 1:1
+com.royalideas.ARPAweb.animales.Animal -- com.royalideas.ARPAweb.personas.Transito  : 1:1
+com.royalideas.ARPAweb.animales.Animal --* com.royalideas.ARPAweb.animales.TipoAnimal : 1:1
+com.royalideas.ARPAweb.personas.Persona --* com.royalideas.ARPAweb.personas.TipoPersona : 1:1
+@enduml
