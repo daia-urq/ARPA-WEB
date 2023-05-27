@@ -14,9 +14,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
+//import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +37,9 @@ public class PersonaController {
     PersonaService service;
 
     @Autowired
+    EncargadoService encargadoService;
+
+    @Autowired
     PasswordEncoder encoder;
 
     @PostMapping("nuevoencargado")
@@ -41,15 +47,15 @@ public class PersonaController {
         Map<String, Object> respuesta = new LinkedHashMap<>();
         respuesta.put("Hora de registro", new Date());
         if (service.existePersona(persona)) {
-            respuesta.put("mensaje", "Ya existe un uusario registrado con ese mail");
+            respuesta.put("mensaje", "Ya existe un usuario registrado con ese mail");
             return new ResponseEntity(respuesta, HttpStatus.BAD_REQUEST);
-        }
-        persona.setContraseña(encoder.encode(persona.getContraseña()));
+        }               
+        persona.setContrasenia(encoder.encode(persona.getContrasenia()));
         service.agregarPersona(persona);
         respuesta.put("mensaje", "Usuario registrado con exito");
         return new ResponseEntity(respuesta, HttpStatus.OK);
     }
-    
+
 //    @PostMapping("nuevoadoptante")
 //    public ResponseEntity<?> crearAdoptante(@RequestBody  DtoAdoptante dtoAdop) {
 //        Map<String, Object> respuesta = new LinkedHashMap<>();
@@ -70,7 +76,52 @@ public class PersonaController {
 //        return null;
 //    }
 //    
-    
+    @DeleteMapping("deleteencargado/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") int id) {
+        Map<String, Object> respuesta = new LinkedHashMap<>();
+        if (!service.existsById(id)) {
+            respuesta.put("mensaje", "No existe un encargado con ese id");
+            return new ResponseEntity(respuesta, HttpStatus.BAD_REQUEST);
+        }
+        service.deletePersona(id);
+        respuesta.put("mensaje", "Encargado eliminado");
+        return new ResponseEntity(respuesta, HttpStatus.OK);
+    }
+
+    @PutMapping("/updateencargado/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody Encargado encargado) {
+        Map<String, Object> respuesta = new LinkedHashMap<>();
+
+        if (!encargadoService.existsById(id)) {
+            respuesta.put("mensaje", "No existe un encargado con este id");
+            return new ResponseEntity(respuesta, HttpStatus.BAD_REQUEST);
+        }
+
+        Encargado aux = encargadoService.findById(id);
+
+        if (encargadoService.existsByMail(encargado.getMail()) && aux.getPersonaid() != encargadoService.findByMail(encargado.getMail()).getPersonaid()) {
+            respuesta.put("mensaje", "Ya existe un encargado con este email");
+            return new ResponseEntity(respuesta, HttpStatus.BAD_REQUEST);
+        }
+
+        if (encargadoService.existsbyDni(encargado.getDni()) && aux.getPersonaid() != encargadoService.findByDni(encargado.getDni()).getPersonaid()) {
+            respuesta.put("mensaje", "Ya existe un encargado con este dni");
+            return new ResponseEntity(respuesta, HttpStatus.BAD_REQUEST);
+        }
+
+        aux.setNombre(encargado.getNombre());
+        aux.setDni(encargado.getDni());
+        aux.setTelefono(encargado.getTelefono());
+        aux.setMail(encargado.getMail());
+        aux.setDomicilio(encargado.getDomicilio());
+        aux.setContrasenia(encoder.encode(encargado.getPassword()));
+        aux.setFechaNacimiento(encargado.getFechaNacimiento());
+
+        service.agregarPersona(aux);
+
+        respuesta.put("mensaje", "Encargado modificado");
+        return new ResponseEntity(respuesta, HttpStatus.OK);
+    }
 
     @GetMapping("personas")
     public ResponseEntity<?> verPersonas() {
@@ -79,14 +130,14 @@ public class PersonaController {
 
     @GetMapping("persona")
     public ResponseEntity<?> verPersona(@RequestParam String mail) {
-        return new ResponseEntity(service.buscarPorMail("alandsn137@gmail.comg"), HttpStatus.OK);
+        return new ResponseEntity(service.buscarPorMail(mail), HttpStatus.OK);
     }
 
     @GetMapping("persona/nombre")
     public ResponseEntity<?> personaPorNombre(@RequestParam String nombre) {
         return new ResponseEntity(service.buscarPorNombre(nombre), HttpStatus.OK);
     }
-    
+
     //queda afuera de persona
     //no
     public void registrarProtectora() {

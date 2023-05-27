@@ -68,7 +68,7 @@ public class Config {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/", "/login", "/nuevousuario").permitAll()
+                .antMatchers("/", "/login", "/nuevoencargado").permitAll()
                 .anyRequest()
                 .authenticated().and();
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

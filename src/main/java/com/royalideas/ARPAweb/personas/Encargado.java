@@ -23,5 +23,5 @@ public class Encargado extends Persona {
     private int genteAcargo;
     @OneToOne
     @JoinColumn(name = "protectoraid")
-    private Protectora protectora;
+    private Protectora protectora;          
 }

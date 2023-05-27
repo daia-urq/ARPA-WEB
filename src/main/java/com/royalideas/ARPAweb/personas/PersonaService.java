@@ -33,8 +33,17 @@ public class PersonaService {
     public Persona buscarPorMail(String mail) {
         return repo.findByMail(mail);
     }
-    
-    public List<Persona> buscarPorNombre(String nombre){
+
+    public List<Persona> buscarPorNombre(String nombre) {
         return repo.findByNombre(nombre);
     }
+
+    public boolean existsById(int id) {
+        return repo.existsById(id);
+    }
+
+    public void deletePersona(int id) {
+        repo.deleteById(id);
+    }
+   
 }

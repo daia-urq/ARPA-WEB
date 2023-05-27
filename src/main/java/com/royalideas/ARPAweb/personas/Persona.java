@@ -52,7 +52,7 @@ public abstract class Persona implements UserDetails {
   
     private String domicilio;
     @NotBlank(message = "Debe introducir una contraseña")
-    private String contraseña;
+    private String contrasenia;
     @Temporal(TemporalType.DATE)
 //    @Past(message = "la fecha debe ser anterior a la actual")
     private Date fechaNacimiento;
@@ -68,7 +68,7 @@ public abstract class Persona implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.getContraseña();
+        return this.getContrasenia();
     }
 
     @Override

@@ -16,4 +16,8 @@ public interface PersonaRepository extends JpaRepository<Persona, Integer> {
     public Persona findByMail(String mail);
     
     public List<Persona> findByNombre(String nombre);
+    
+    public boolean existsById(int id);
+    
+    
 }

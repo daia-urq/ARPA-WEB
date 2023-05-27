@@ -25,7 +25,7 @@ public class DetalleUsuario implements UserDetailsService {
         if (persona == null) {
             throw new UsernameNotFoundException(username);
         }
-        UserDetails user = User.withUsername(persona.getMail()).password(persona.getContraseña()).authorities("USER").build();
+        UserDetails user = User.withUsername(persona.getMail()).password(persona.getContrasenia()).authorities("USER").build();
         return user;
     }
 
