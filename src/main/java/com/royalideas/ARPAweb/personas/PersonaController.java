@@ -43,18 +43,35 @@ public class PersonaController {
     PasswordEncoder encoder;
 
     @PostMapping("nuevoencargado")
-    public ResponseEntity<?> crearEncargado(@RequestBody @Valid Encargado persona) {
+    public ResponseEntity<?> crearEncargado(@RequestBody @Valid Encargado encargado) {
         Map<String, Object> respuesta = new LinkedHashMap<>();
         respuesta.put("Hora de registro", new Date());
-        if (service.existePersona(persona)) {
-            respuesta.put("mensaje", "Ya existe un usuario registrado con ese mail");
+        if (service.existePersona(encargado)) {
+            respuesta.put("mensaje", "Ya existe un encargado registrado con ese email");
             return new ResponseEntity(respuesta, HttpStatus.BAD_REQUEST);
         }               
-        persona.setContrasenia(encoder.encode(persona.getContrasenia()));
-        service.agregarPersona(persona);
-        respuesta.put("mensaje", "Usuario registrado con exito");
+        encargado.setContrasenia(encoder.encode(encargado.getContrasenia()));
+        service.agregarPersona(encargado);
+        respuesta.put("mensaje", "Encargado registrado con exito");
         return new ResponseEntity(respuesta, HttpStatus.OK);
     }
+    
+    @PostMapping("nuevoadoptante")
+    public ResponseEntity<?> crearAdoptante(@RequestBody @Valid Adoptante adoptante){
+        
+        Map<String, Object> respuesta = new LinkedHashMap<>();
+        respuesta.put("Hora de registro", new Date());
+        
+        if (service.existePersona(adoptante)) {
+            respuesta.put("mensaje", "Ya existe un adoptante registrado con ese email");
+            return new ResponseEntity(respuesta, HttpStatus.BAD_REQUEST);
+        }               
+        adoptante.setContrasenia(encoder.encode(adoptante.getContrasenia()));
+        service.agregarPersona(adoptante);
+        respuesta.put("mensaje", "Adoptante registrado con exito");
+        return new ResponseEntity(respuesta, HttpStatus.OK);
+    }
+    
 
 //    @PostMapping("nuevoadoptante")
 //    public ResponseEntity<?> crearAdoptante(@RequestBody  DtoAdoptante dtoAdop) {

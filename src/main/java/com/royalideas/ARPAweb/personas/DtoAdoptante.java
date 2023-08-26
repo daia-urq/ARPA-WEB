@@ -25,8 +25,7 @@ public class DtoAdoptante {
     @NotNull
     private String domicilio;
     @NotNull
-    private String contraseña;
-  
+    private String contraseña;  
     @NotNull
     private Date fechaNacimiento;
     

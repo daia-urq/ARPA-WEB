@@ -35,7 +35,7 @@ public class ProtectoraService {
         protectoraRepository.deleteById(id);
     }
     
-    public boolean existeProtectora(Protectora protectora){
+    public boolean existsByMail(Protectora protectora){
         return protectoraRepository.existsByMail(protectora.getMail());
     }
     

@@ -52,7 +52,7 @@ public class Protectora {
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "personaid")
-    private Encargado encargada;
+    private Encargado encargado;
     @ManyToMany
     @JoinTable(
             name = "protectora_empleado",

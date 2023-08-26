@@ -18,5 +18,7 @@ import lombok.Setter;
 @Setter
 public class Adoptante extends Persona {
 
-    private Boolean apto;
+    private Boolean apto;      
+    
+    
 }

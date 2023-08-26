@@ -1,5 +1,7 @@
 package com.royalideas.ARPAweb.protectora;
 
+import com.royalideas.ARPAweb.personas.Encargado;
+import com.royalideas.ARPAweb.personas.PersonaService;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -29,15 +31,21 @@ public class ProtectoraController {
 
     @Autowired
     CapacidadRepository capacidadRepository;
+    
+    @Autowired
+    PersonaService personaService;
+    
 
     @PostMapping("nuevaprotectora")
     public ResponseEntity<?> crearProtectora(@RequestBody @Valid Protectora protectora) {
         Map<String, Object> respuesta = new LinkedHashMap<>();
         respuesta.put("Hora de registro", new Date());
-        if (protectoraService.existeProtectora(protectora)) {
+        
+        if (protectoraService.existsByMail(protectora)) {
             respuesta.put("mensaje", "Ya existe una protectora registrada con ese mail");
             return new ResponseEntity(respuesta, HttpStatus.BAD_REQUEST);
         }
+        
         Capacidad capacidad = new Capacidad();
         capacidad.setCapTotal(protectora.getCapacidad().getCapTotal());
         capacidad.setCapacidadid(protectora.getCapacidad().getCapTotal());
@@ -45,6 +53,11 @@ public class ProtectoraController {
         capacidad = capacidadRepository.save(capacidad);
         protectora.setCapacidad(capacidad);
         protectoraService.crearProtectora(protectora);
+        
+        Encargado encargado = protectora.getEncargado();
+        encargado.setProtectora(protectora);
+        personaService.agregarPersona(encargado);
+        
         respuesta.put("mensaje", "Protectora registrado con exito");
         return new ResponseEntity(respuesta, HttpStatus.OK);
     }
