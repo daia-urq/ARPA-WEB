@@ -69,7 +69,7 @@ public class Config {
         http.cors().and().csrf().disable();
         http.authorizeRequests()
                 .antMatchers("/", "/login", "/nuevoencargado",
-                        "/nuevoadoptante", "/nuevaprotectora").permitAll()
+                        "/nuevoadoptante", "/nuevaprotectora","/animal/crearperro","/animal/perro").permitAll()
                
                 .anyRequest()
                 .authenticated().and();

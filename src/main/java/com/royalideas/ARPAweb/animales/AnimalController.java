@@ -1,10 +1,15 @@
 package com.royalideas.ARPAweb.animales;
 
+import com.royalideas.ARPAweb.commons.Compatible;
+import com.royalideas.ARPAweb.commons.Condicion;
+import com.royalideas.ARPAweb.protectora.HistoriaClinica;
+import com.royalideas.ARPAweb.protectora.HistoriaRepository;
+import com.royalideas.ARPAweb.protectora.Protectora;
 import com.royalideas.ARPAweb.protectora.ProtectoraRepository;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import javax.validation.Valid;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,24 +38,50 @@ public class AnimalController {
 
     @Autowired
     PerroRepository perroRepository;
+    
+    @Autowired
+    HistoriaRepository historiaRepository;
 
+    @Transactional
     @PostMapping("animal/crearperro")
-    public ResponseEntity<?> crearAnimal(@RequestBody @Valid Perro animal) {
+    public ResponseEntity<?> crearAnimal(@RequestBody PerroDTO animal) {
         Map<String, Object> response = new LinkedHashMap<>();
-        animal.setProtectora(protectoraRepository.findByNombre(animal.getProtectora().getNombre()));
-        animal = (Perro) animalservice.guardarAnimal(animal);
-        response.put("mensaje", "creado con exito");
+        
+        HistoriaClinica historiaClinica = new HistoriaClinica();
+        historiaRepository.save(historiaClinica);
+        
+        Protectora protectora = protectoraRepository.findById(animal.getProtectora()).orElse(null);
+        
+        Condicion condicion = Condicion.valueOf(animal.getCondicion().toUpperCase());        
+        Compatible compatible = Compatible.valueOf(animal.getCompatibilidad().toUpperCase());
+          
+        Perro perro = new Perro(
+        animal.getTamano(),
+        animal.getRaza(),
+        animal.getEdad(),
+        animal.getNombre(),
+        animal.getGenero(),
+        animal.getCastrado(),
+        historiaClinica,
+        condicion,
+        compatible,
+        protectora,
+        animal.getTipo()
+    );
+        perroRepository.save(perro);
+                
+        response.put("mensaje", "Perro creado con exito");
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
-    @PostMapping("animal/creargato")
-    public ResponseEntity<?> crearAnimal(@RequestBody Gato animal) {
-        Map<String, Object> response = new LinkedHashMap<>();
-        animal.setProtectora(protectoraRepository.findByNombre(animal.getProtectora().getNombre()));
-        animal = (Gato) animalservice.guardarAnimal(animal);
-        response.put("mensaje", "creado con exito");
-        return new ResponseEntity(response, HttpStatus.CREATED);
-    }
+//    @PostMapping("animal/creargato")
+//    public ResponseEntity<?> crearAnimal(@RequestBody Gato animal) {
+//        Map<String, Object> response = new LinkedHashMap<>();
+//        animal.setProtectora(protectoraRepository.findByNombre(animal.getProtectora().getNombre()));
+//        animal = (Gato) animalservice.guardarAnimal(animal);
+//        response.put("mensaje", "creado con exito");
+//        return new ResponseEntity(response, HttpStatus.CREATED);
+//    }
 
     @GetMapping("animales")
     public List<Animal> listarAnimales() {

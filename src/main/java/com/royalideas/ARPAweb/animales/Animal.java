@@ -1,7 +1,10 @@
 package com.royalideas.ARPAweb.animales;
 
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.royalideas.ARPAweb.commons.Compatible;
+import com.royalideas.ARPAweb.commons.Condicion;
 import com.royalideas.ARPAweb.personas.Adoptante;
 import com.royalideas.ARPAweb.protectora.HistoriaClinica;
 import com.royalideas.ARPAweb.protectora.Protectora;
@@ -46,15 +49,15 @@ public abstract class Animal {
     @NotBlank(message = "el nombre no puede estar vacio")
     private String nombre;
     private String genero;
-    private Boolean castrado;
+    private Boolean castrado;    
     @ManyToOne
     @JoinColumn(name = "aodptanteid")
     private Adoptante adoptante;
     @OneToOne
     @JoinColumn(name = "historiaClinicaid")
     private HistoriaClinica historiaClinica;
-    private int condicion;
-    private int compatibilidad;
+    private Condicion condicion;
+    private Compatible compatibilidad;
     @ManyToOne
     @JoinColumn(name = "protectoraid")
     @JsonIdentityInfo(
@@ -62,4 +65,21 @@ public abstract class Animal {
             property = "protectoraid")
     private Protectora protectora;
     private String tipo;
-}
+
+    public Animal() {
+    }
+
+    public Animal(String raza, Integer edad, String nombre, String genero, Boolean castrado, HistoriaClinica historiaClinica, Condicion condicion, Compatible compatibilidad, Protectora protectora, String tipo) {
+        this.raza = raza;
+        this.edad = edad;
+        this.nombre = nombre;
+        this.genero = genero;
+        this.castrado = castrado;
+        this.historiaClinica = historiaClinica;
+        this.condicion = condicion;
+        this.compatibilidad = compatibilidad;
+        this.protectora = protectora;
+        this.tipo = tipo;
+    }
+    }       
+
